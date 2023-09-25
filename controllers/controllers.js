@@ -2,7 +2,7 @@
 const Film = require("../models/Film");
 
 // Define the controller functions
-async function getAllData() {
+const getAllData = async()=> {
   try {
     // Query the collection to retrieve all films
     const films = await Film.find();
@@ -14,7 +14,17 @@ async function getAllData() {
   }
 }
 
-async function getDataById(id) {
+const getLatestFilms = async () => {
+  try {
+    const films = await Film.find().sort({ releaseDate: -1 }).limit(4);
+    return films;
+  } catch (error) {
+    console.error("Error retrieving data:", error);
+    return { error: "Failed to retrieve data" };
+  }
+}
+
+const getDataById = async(id)=> {
   try {
     // Query the collection to retrieve a film by ID
     const film = await Film.findById(id);
@@ -25,8 +35,22 @@ async function getDataById(id) {
   }
 }
 
+// search
+const searchResults = async(searchTerm)=> {
+  console.info("searchTerm:", searchTerm);
+  try {
+    // const data = await Film.find({ filmTitle: searchTerm});
+        const data = await Film.find({ filmTitle: { $regex: new RegExp(searchTerm, 'i') } });
+    console.info("data:", data);
+     return data;
+  } catch (error) {
+    console.error("Error retrieving data:", error);
+    return { error: "Failed to retrieve data" };
+  }
+}
+
 // create
-async function createData(data) {
+const createData = async (data)  =>{
   try {
     const newDocument = await Film.create(data);
     console.log(newDocument);
@@ -37,7 +61,7 @@ async function createData(data) {
   }
 }
 // update
-async function updateData(id, data) {
+const updateData  = async (id, data) => {
   try {
     const updatedDocument = await Film.findByIdAndUpdate(id, data, {
       new: true,
@@ -50,7 +74,7 @@ async function updateData(id, data) {
 }
 
 // delete
-async function deleteData(id) {
+const deleteData = async (id) => {
   try {
     const deletedDocument = await Film.findByIdAndDelete(id);
     return deletedDocument;
@@ -60,11 +84,14 @@ async function deleteData(id) {
   }
 }
 
+
 // Export the controller functions
 module.exports = {
+  getLatestFilms,
   getAllData,
   getDataById,
+  searchResults,
   createData,
   updateData,
-  deleteData,
+  deleteData
 };
