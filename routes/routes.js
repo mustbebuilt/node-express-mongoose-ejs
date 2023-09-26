@@ -30,7 +30,7 @@ router.get("/film/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+//search/star wars
 router.get("/search/:searchTerm", async (req, res) => {
   try {
     const searchTerm = req.params.searchTerm;

@@ -19,6 +19,7 @@ const getAllData = async()=> {
 const getLatestFilms = async () => {
   try {
     const films = await Film.find().sort({ releaseDate: -1 }).limit(4);
+    // const films = await Film.find();
     return films;
   } catch (error) {
     console.error("Error retrieving data:", error);
@@ -42,7 +43,7 @@ const searchResults = async(searchTerm)=> {
   console.info("searchTerm:", searchTerm);
   try {
     // const data = await Film.find({ filmTitle: searchTerm});
-        const data = await Film.find({ filmTitle: { $regex: new RegExp(searchTerm, 'i') } });
+     const data = await Film.find({ filmTitle: { $regex: new RegExp(searchTerm, 'i') } });
     console.info("data:", data);
      return data;
   } catch (error) {
