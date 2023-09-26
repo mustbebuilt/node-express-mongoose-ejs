@@ -152,5 +152,16 @@ router.post("/cms/delete/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// sample path for working with multiple collections
+router.get("/actors/:id", async (req, res) => {
+  try {
+    const data = await dataController.getActors(req.params.id);
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+  
+})
 
 module.exports = router;

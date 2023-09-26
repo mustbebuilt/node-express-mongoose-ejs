@@ -1,5 +1,7 @@
 // Import the necessary modules
 const Film = require("../models/Film");
+const FilmsAdv = require("../models/FilmsAdv");
+
 
 // Define the controller functions
 const getAllData = async()=> {
@@ -84,6 +86,17 @@ const deleteData = async (id) => {
   }
 }
 
+const getActors = async (id) => {
+ try {
+    // Query the collection to actors a film by ID
+    const film = await FilmsAdv.findById(id).populate("actors");
+    return film;
+  } catch (error) {
+    console.error("Error retrieving data:", error);
+    return { error: "Failed to retrieve data" };
+  }
+}
+
 
 // Export the controller functions
 module.exports = {
@@ -93,5 +106,6 @@ module.exports = {
   searchResults,
   createData,
   updateData,
-  deleteData
+  deleteData,
+  getActors
 };
