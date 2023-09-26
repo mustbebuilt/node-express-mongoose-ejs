@@ -12,6 +12,7 @@
       href="/css/desktop.css"
     />
     <link rel="stylesheet" href="/css/cms.css" />
+        <script src="/js/searchSubmission.js" defer></script>
   </head>
   <body>
     <header>
@@ -26,8 +27,8 @@
           </nav>
           <div class="topbar">
             <div class="searchBox">
-              <form method="get" action="/search">
-                <input type="text" name="searchVal" />
+              <form method="get" action="/search" id="searchForm">
+                <input type="text" name="searchInput" id="searchInput" />
                 <input type="submit" value="Search" />
               </form>
             </div>
